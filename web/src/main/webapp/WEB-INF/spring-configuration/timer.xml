@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="qrCodeTask" class="com.struggle.timer.QRCodeTask" init-method="init"/>
+
+    <bean id="qrCodeJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="qrCodeTask"/>
+        <property name="targetMethod" value="exec"/>
+        <property name="concurrent" value="true"/>
+    </bean>
+
+    <bean id="qrCodeTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="qrCodeJob"/>
+        <property name="cronExpression" value="*/15 * * * * ?"/>
+    </bean>
+
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="qrCodeTrigger"/>
+            </list>
+        </property>
+    </bean>
+
+</beans>

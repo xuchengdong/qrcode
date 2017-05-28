@@ -181,6 +181,7 @@
     </dependencyManagement>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <zxing.version>3.3.0</zxing.version>
         <qrgen.version>2.0</qrgen.version>
         <log4j.version>2.7</log4j.version>
